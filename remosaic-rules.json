@@ -1,0 +1,15 @@
+			{ // camx_fullsize: LYT-818 main and ultrawide 50 MP with on-sensor remosaic
+				"Type": "Width",
+				"Condition": ["int", "==8192"],
+				"Result": "HWREMOSAIC"
+			},
+			{ // camx_fullsize: HP9 50 MP with on-sensor remosaic; the front camera is also 8160 wide
+				"Type": "Width",
+				"Condition": ["int", "==8160"],
+				"UsecaseSelector": [
+				{
+					"Type": "Camera ID",
+					"Condition": ["int", "==3", "==4"],
+					"Result": "HWREMOSAIC"
+				}]
+			},

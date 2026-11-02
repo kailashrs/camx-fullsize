@@ -1,0 +1,6 @@
+id=camx_fullsize
+name=CamX Full-Size QCFA
+version=v0.3
+versionCode=3
+author=kailashrs
+description=50 MP on the main, ultrawide and HP9 for third-party apps (exposeFullSizeForQCFA + sensor-mode rules) and hidden-camera access for PhotonCamera and Open Camera. Pair with OriTweaks "Full resolution in camera apps".
