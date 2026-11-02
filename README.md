@@ -18,7 +18,7 @@ the sensor-mode rules needed to fill them correctly.
 | Device | vivo X200 Ultra (PD2454), China firmware |
 | OS | OriginOS 6 (Android 16) and OriginOS 7 (Android 17, checked on 17.2.10.6) |
 | Root | KernelSU (developed on 3.3 LKM), Magisk or APatch: anything that runs `service.sh` and provides `resetprop` |
-| Camera apps | PhotonCamera (verified 50 MP on main, ultrawide and HP9); Open Camera 1.56 with its Camera2 API setting (not yet verified on the phone) |
+| Camera apps | PhotonCamera (verified 50 MP on main, ultrawide and HP9); Open Camera 1.56 with its Camera2 API setting (verified 50 MP) |
 
 ## What it changes
 
