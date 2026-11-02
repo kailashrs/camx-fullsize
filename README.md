@@ -18,7 +18,7 @@ the sensor-mode rules needed to fill them correctly.
 | Device | vivo X200 Ultra (PD2454), China firmware |
 | OS | OriginOS 6 (Android 16) and OriginOS 7 (Android 17, checked on 17.2.10.6) |
 | Root | KernelSU (developed on 3.3 LKM), Magisk or APatch: anything that runs `service.sh` and provides `resetprop` |
-| Camera apps | PhotonCamera (verified 50 MP on main, ultrawide and HP9); Open Camera (scoped, not yet verified) |
+| Camera apps | PhotonCamera (verified 50 MP on main, ultrawide and HP9); Open Camera 1.56 with its Camera2 API setting (not yet verified on the phone) |
 
 ## What it changes
 
@@ -44,7 +44,7 @@ Nothing is written to `/vendor`. Uninstalling or disabling the module and reboot
    ```
 3. Reboot.
 4. Install [OriTweaks](https://github.com/kailashrs/OriTweaks), scope it to your camera app and enable **Full resolution in camera apps**.
-5. In PhotonCamera, turn on the **Quad Bayer** option.
+5. In PhotonCamera, turn on the **Quad Bayer** option. In Open Camera, switch **Settings › Camera API** to **Camera2 API** (the original API never sees full-size outputs) and pick a 50 MP size under **Photo settings › Camera resolution**.
 
 ## Checking that it works
 
