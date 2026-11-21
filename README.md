@@ -28,19 +28,19 @@ The module ships no copies of vivo's files. At every boot, `service.sh` does the
 2. Writes patched copies into the module's `patched/` folder:
    - `camxoverridesettings.txt`: sets `exposeFullSizeForQCFA=TRUE`. The HAL then advertises `ULTRA_HIGH_RESOLUTION_SENSOR`, plus the maximum-resolution stream configurations: 8192×6144 on the LYT-818 sensors and 8160×6144 on the HP9.
    - `sensormode-selector/PD2454.json`: inserts the rules from [`remosaic-rules.json`](remosaic-rules.json) at the top of the `"!vivo"` (third-party app) branch. Full-width requests then pick the `HWREMOSAIC` sensor mode: 8192 on any camera, and 8160 only on camera IDs 3 and 4 (the HP9; the front camera is also 8160 wide). Without these rules, the HAL streams a binned frame into the corner of the 50 MP buffer.
-3. Bind-mounts the patched files over the originals, keeping their SELinux label (`vendor_configs_file`).
-4. Sets `vendor.camera.aux.packagelist` to `com.android.camera,com.particlesdevs.photoncamera,net.sourceforge.opencamera`, so those apps can see the hidden physical cameras, including the HP9 as camera 5. The property is limited to 92 characters.
-5. Restarts the QTI camera provider and `cameraserver` so they read the new configuration.
+3. Turns `/vendor` into a private mount subtree, then bind-mounts the patched files over the originals, keeping their SELinux label (`vendor_configs_file`). `cameraserver` and the QTI/vivo providers run in init's mount namespace and see the patch; apps receive a slave copy of that namespace from zygote, so the bind mounts do **not** appear in app mountinfo. This matters for RASP layers (for example DexGuard ThreatCast) that treat extra mounts under `/vendor` as a root/tamper marker.
+4. Appends `com.android.camera`, `com.particlesdevs.photoncamera` and `net.sourceforge.opencamera` to `vendor.camera.aux.packagelist` (preserving anything the vendor already published, up to the 92-character property limit), so those apps can see the hidden physical cameras, including the HP9 as camera 5.
+5. Restarts `cameraserver`, the QTI camera provider and the third-party camera provider so they read the new configuration.
 
-Nothing is written to `/vendor`. Uninstalling or disabling the module and rebooting restores stock behaviour.
+Nothing is written to `/vendor`. Uninstalling or disabling the module and rebooting restores stock behaviour. If you are updating from v0.3 or older, reboot once: the old app-visible bind mounts are copies that live in already-running app namespaces and cannot be removed without restarting zygote.
 
 ## Installation
 
 1. Download `camx_fullsize-*.zip` from [Releases](https://github.com/kailashrs/camx-fullsize/releases).
 2. Install it from the KernelSU or Magisk manager. Or from a computer:
    ```bash
-   adb push camx_fullsize-v0.3.zip /data/local/tmp/
-   adb shell su -c /data/adb/ksud module install /data/local/tmp/camx_fullsize-v0.3.zip
+   adb push camx_fullsize-v0.4.zip /data/local/tmp/
+   adb shell su -c /data/adb/ksud module install /data/local/tmp/camx_fullsize-v0.4.zip
    ```
 3. Reboot.
 4. Install [OriTweaks](https://github.com/kailashrs/OriTweaks), scope it to your camera app and enable **Full resolution in camera apps**.
